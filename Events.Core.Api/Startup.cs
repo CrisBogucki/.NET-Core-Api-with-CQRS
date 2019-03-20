@@ -6,6 +6,8 @@ using Events.Core.Api.CQRS.Command;
 using Events.Core.Api.CQRS.Command.Code;
 using Events.Core.Api.CQRS.Event;
 using Events.Core.Api.CQRS.Event.Code;
+using Events.Core.Api.CQRS.Query;
+using Events.Core.Api.CQRS.Query.Code;
 using Events.Core.Api.Domain.Command;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,7 @@ namespace Events.Core.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<ICommandBus, CommandBus>();
             services.AddScoped<IEventBus, EventBus>();
+            services.AddScoped<IQueryBus, QueryBus>();
             
             // HandleCommand
             services.AddTransient<Func<Type, IHandleCommand>>(provider => key => provider.GetService<IHandleCommand>());
@@ -53,6 +56,17 @@ namespace Events.Core.Api
                     .WithTransientLifetime();
             }); 
             
+            // Query Handle
+            services.AddTransient<Func<Type, IHandleQuery>>(provider => key => provider.GetService<IHandleQuery>());
+            services.Scan(scan =>
+            {
+                var assembly = Assembly.GetEntryAssembly();
+                scan.FromAssemblies(assembly)
+                    .AddClasses(classes => classes.AssignableTo(typeof(IHandleQuery)))
+                    .AsImplementedInterfaces()
+                    .WithTransientLifetime();
+            }); 
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +78,6 @@ namespace Events.Core.Api
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

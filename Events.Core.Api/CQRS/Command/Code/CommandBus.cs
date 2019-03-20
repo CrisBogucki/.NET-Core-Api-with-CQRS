@@ -31,7 +31,7 @@ namespace Events.Core.Api.CQRS.Command.Code
             {
                 try
                 {
-                    var handler = (IHandleCommand<T>) _handlersFactory(typeof(T));
+                    var handler = (IHandleCommand<T>) _handlersFactory(typeof(IHandleCommand<T>));
                     handler.Handle(cmd);
                 }
                 catch (Exception e)
