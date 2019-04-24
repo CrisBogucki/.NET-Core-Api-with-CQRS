@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Events.Core.Api.CQRS;
 using Events.Core.Api.CQRS.Command;
 using Events.Core.Api.CQRS.Query;
 using Events.Core.Api.Domain.Command;
@@ -29,6 +30,7 @@ namespace Events.Core.Api.Controllers
         [HttpGet("{msg}")]
         public async Task<ActionResult> Get(string msg)
         {
+            
             _commandBus.SendCommand(new MessageCommand(){Message = "My mesage 1", Title = "Title 1", Delay = 5000});
 
             IResponse c = _queryBus.SendQuery(new MessageQuery() {Id = 99});
