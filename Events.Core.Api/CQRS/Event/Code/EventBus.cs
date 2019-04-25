@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Events.Core.Api.CQRS.Tools;
 
 namespace Events.Core.Api.CQRS.Event.Code
 {
@@ -18,14 +20,30 @@ namespace Events.Core.Api.CQRS.Event.Code
             // Logging
             // Auth
             // validate
-            // measure time
             // error handling
             // ...
-            
             var handlers = _handlersFactory(typeof(T)).Cast<IHandleEvent<T>>();
             foreach (var handler in handlers)
             {
-                handler.Handle(cmd);
+                using (new Performance<T>())
+                {
+                    handler.Handle(cmd);
+                }
+            }
+        }
+        
+        public async Task PublishEventAsync<T>(T cmd) where T : IEvent
+        {
+            var handlers = _handlersFactory(typeof(T)).Cast<IHandleEvent<T>>();
+            foreach (var handler in handlers)
+            {                
+                await Task.Run(() =>
+                {
+                    using (new Performance<T>())
+                    {
+                        handler.Handle(cmd);
+                    }
+                });
             }
         }
     }

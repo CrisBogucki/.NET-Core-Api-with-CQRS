@@ -7,7 +7,7 @@ namespace Events.Core.Api.Domain.Query
     {
         public MessageQueryResponse Handle(MessageQuery query)
         {
-            Console.WriteLine($" Zapytanie z query {query.Id} ");
+            Console.WriteLine($"<- query {query.Id} ");
             return new MessageQueryResponse(){ Message = @"Odpowiedź z Query " + query.Id};
         }
     }

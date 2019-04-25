@@ -1,5 +1,3 @@
-using Events.Core.Api.CQRS.Command;
-
 namespace Events.Core.Api.CQRS.Query
 {
     public interface IHandleQuery

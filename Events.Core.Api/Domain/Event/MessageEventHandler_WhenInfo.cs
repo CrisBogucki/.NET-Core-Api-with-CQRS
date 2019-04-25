@@ -7,7 +7,7 @@ namespace Events.Core.Api.Domain.Event
     {
         public void Handle(MessageEvent @event)
         {
-            Console.WriteLine($"Event info !!! {@event.Message} ");
+            Console.WriteLine($"<- event info !!! {@event.Message} ");
         }
     }
 }

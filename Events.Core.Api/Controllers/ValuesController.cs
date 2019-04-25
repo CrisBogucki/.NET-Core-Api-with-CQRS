@@ -30,10 +30,11 @@ namespace Events.Core.Api.Controllers
         [HttpGet("{msg}")]
         public async Task<ActionResult> Get(string msg)
         {
-            
-            _commandBus.SendCommand(new MessageCommand(){Message = "My mesage 1", Title = "Title 1", Delay = 5000});
+            Console.WriteLine("-> command");
+            _commandBus.SendCommandAsync(new MessageCommand(){Message = "My mesage 1", Title = "Title 1", Delay = 5000});
 
-            IResponse c = _queryBus.SendQuery(new MessageQuery() {Id = 99});
+            Console.WriteLine("-> query");
+            IResponse c = await _queryBus.SendQueryAsync(new MessageQuery() {Id = 99});
 
             return Ok(c);
         }

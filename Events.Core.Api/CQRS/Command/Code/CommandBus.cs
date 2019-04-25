@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Events.Core.Api.CQRS.Tools;
 
 namespace Events.Core.Api.CQRS.Command.Code
 {
@@ -17,28 +19,25 @@ namespace Events.Core.Api.CQRS.Command.Code
             // logging
             // auth
             // validate
-            // measure time
             // error handling
             // ...
 
-            var handler = (IHandleCommand<T>) _handlersFactory(typeof(T));
-            handler.Handle(cmd);
+            using (new Performance<T>())
+            {
+                var handler = (IHandleCommand<T>) _handlersFactory(typeof(T));
+                handler.Handle(cmd);
+            }
         }
 
         public async Task SendCommandAsync<T>(T cmd) where T : ICommand
         {
             await Task.Run(() =>
             {
-                try
+                using (new Performance<T>())
                 {
                     var handler = (IHandleCommand<T>) _handlersFactory(typeof(IHandleCommand<T>));
                     handler.Handle(cmd);
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                
             });
         }
     }

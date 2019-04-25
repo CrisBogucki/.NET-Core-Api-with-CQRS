@@ -17,16 +17,16 @@ namespace Events.Core.Api.Domain.Command
 
         public void Handle(MessageCommand command)
         {
-            Console.WriteLine("");
-            Console.WriteLine($"Command {command.Title}");
-
             var msg = new MessageEvent()
             {
                 Date = DateTime.Now, // get date from regex
                 Message = command.Message + " to events"
             };
+            
+            Console.WriteLine($"<- command {command.Title}");
 
-            _eventsBus.PublishEvent(msg);
+            Console.WriteLine("-> event");
+            _eventsBus.PublishEventAsync(msg);
         }
     }
 }

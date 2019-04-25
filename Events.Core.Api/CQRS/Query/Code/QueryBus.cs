@@ -1,5 +1,6 @@
 using System;
-using Events.Core.Api.CQRS.Command;
+using System.Threading.Tasks;
+using Events.Core.Api.CQRS.Tools;
 
 namespace Events.Core.Api.CQRS.Query.Code
 {
@@ -17,12 +18,26 @@ namespace Events.Core.Api.CQRS.Query.Code
             // logging
             // auth
             // validate
-            // measure time
             // error handling
             // ...
 
-            var handler = (IHandleQuery<IResponse, T>) _handlersFactory(typeof(T));
-            return handler.Handle(cmd);
+            using (new Performance<T>())
+            {
+                var handler = (IHandleQuery<IResponse, T>) _handlersFactory(typeof(T));
+                return handler.Handle(cmd);
+            }
+        }
+
+        public async Task<IResponse> SendQueryAsync<T>(T cmd) where T : IQuery
+        {
+            return await Task.Run(() =>
+            {
+                using (new Performance<T>())
+                {
+                    var handler = (IHandleQuery<IResponse, T>) _handlersFactory(typeof(T));
+                    return handler.Handle(cmd);
+                }
+            });
         }
     }
 }
