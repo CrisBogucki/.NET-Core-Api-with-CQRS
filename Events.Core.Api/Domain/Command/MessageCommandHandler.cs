@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Events.Core.Api.CQRS.Command;
 using Events.Core.Api.CQRS.Event;
 using Events.Core.Api.Domain.Event;
@@ -17,16 +18,10 @@ namespace Events.Core.Api.Domain.Command
 
         public void Handle(MessageCommand command)
         {
-            var msg = new MessageEvent()
-            {
-                Date = DateTime.Now, // get date from regex
-                Message = command.Message + " to events"
-            };
             
             Console.WriteLine($"<- command {command.Title}");
 
-            Console.WriteLine("-> event");
-            _eventsBus.PublishEventAsync(msg);
+  
         }
     }
 }

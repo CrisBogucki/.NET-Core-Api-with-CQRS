@@ -1,7 +1,6 @@
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Events.Core.Api.CQRS.Tools;
+using Events.Core.Api.CQRS.Extensions;
 
 namespace Events.Core.Api.CQRS.Command.Code
 {

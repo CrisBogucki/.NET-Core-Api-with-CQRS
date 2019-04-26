@@ -2,12 +2,11 @@ using System;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore.Internal;
 
-namespace Events.Core.Api.CQRS.Tools
+namespace Events.Core.Api.CQRS.Extensions
 {
     public class Performance<T> : IDisposable
     {
-        private Stopwatch performTime;
-        private T properties;
+        private readonly Stopwatch performTime;
         
         public Performance()
         {
@@ -19,7 +18,6 @@ namespace Events.Core.Api.CQRS.Tools
         {
             double totalTime = performTime.Elapsed.TotalMilliseconds;
             Console.WriteLine($"Handler: {typeof(T).ShortDisplayName()} Time:{totalTime}ms");
-            //Console.WriteLine($"Time:{totalTime}ms");
         }
     }
 }
