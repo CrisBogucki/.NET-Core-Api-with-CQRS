@@ -4,7 +4,7 @@ Segregation with events, comands and queries
 ![](http://www.ouarzy.com/wp-content/uploads/2016/09/cqsr_pattern.png)
 
 ## Using Command
-First add databus as dependency inject
+Add commandbus in constructor use dependency inject
 ```
 private readonly ICommandBus commandBus;
 
@@ -12,7 +12,9 @@ public MyController(ICommandBus commandBus)
 {
     this.commandBus = commandBus;
 }
+```
 
+```      
 public async Task RunCommandAsync()
 {
     MessageCommand _msg = new MessageCommand() { ... };
