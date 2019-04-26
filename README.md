@@ -18,9 +18,9 @@ public async Task RunCommandAsync()
     MessageCommand _msg = new MessageCommand() { ... };
     this.commandBus.SendCommandAsync(_msg);
 }
-
+```
 or 
-
+```
 public void RunCommand()
 {
     MessageCommand _msg = new MessageCommand() { ... };
