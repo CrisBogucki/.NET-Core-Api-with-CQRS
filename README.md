@@ -14,6 +14,8 @@ public MyController(ICommandBus commandBus)
 }
 ```
 
+Method 
+using by async
 ```      
 public async Task RunCommandAsync()
 {
@@ -21,7 +23,7 @@ public async Task RunCommandAsync()
     this.commandBus.SendCommandAsync(_msg);
 }
 ```
-or 
+or void synchro
 ```
 public void RunCommand()
 {
