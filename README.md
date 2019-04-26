@@ -60,3 +60,32 @@ public void RunQuery()
     var result = this.queryBus.SendQuery(_msg);
 }
 ```
+
+## Using Events
+add eventsbus in constructor use dependency inject
+```
+private readonly IEventBus eventsBus;
+
+public MyController(IEventBus eventsBus)
+{
+    this.eventsBus = eventsBus;
+}
+```
+
+method 
+using by async
+```      
+public async Task RunEventsAsync()
+{
+    MessageEvent _msg = new MessageEvent() { ... };
+    await this.eventsBus.PublishEventAsync(msg);
+}
+```
+or void synchro
+```
+public void RunEvents()
+{
+    MessageEvent _msg = new MessageEvent() { ... };
+    this.eventsBus.PublishEvent(msg);
+}
+```
