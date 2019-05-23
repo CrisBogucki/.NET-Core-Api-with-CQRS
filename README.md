@@ -4,7 +4,7 @@ Segregation with events, comands and queries
 ![](http://www.ouarzy.com/wp-content/uploads/2016/09/cqsr_pattern.png)
 
 ## Using Command
-add commandbus in constructor use dependency inject
+add command bus in constructor use dependency inject
 ```
 private readonly ICommandBus commandBus;
 
@@ -33,7 +33,7 @@ public void RunCommand()
 ```
 
 ## Using Query
-add querybus in constructor use dependency inject
+add query bus in constructor use dependency inject
 ```
 private readonly IQueryBus queryBus;
 
@@ -62,7 +62,7 @@ public void RunQuery()
 ```
 
 ## Using Events
-add eventsbus in constructor use dependency inject
+add events bus in constructor use dependency inject
 ```
 private readonly IEventBus eventsBus;
 
